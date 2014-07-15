@@ -10,7 +10,11 @@ describe "MealParser", ->
         calories: 183
         foods: '2 Sandwiches'
         important: true
-      assert.deepEqual tokens, shouldTokens
+      assert.equal tokens.date.toString(), shouldTokens.date.toString()
+      assert.equal tokens.calories, shouldTokens.calories
+      assert.equal tokens.foods, shouldTokens.foods
+      assert.equal tokens.important, shouldTokens.important
+
 
     it "1/2 a sandwich", ->
       tokens = parser.parseMeal 'apple and 1/2 a sandwich 6:03pm 33 calories! feb 28th 150 calories'
@@ -19,7 +23,11 @@ describe "MealParser", ->
         calories: 183
         foods: 'Apple & 1/2 a Sandwich'
         important: true
-      assert.deepEqual tokens, shouldTokens
+      assert.equal tokens.date.toString(), shouldTokens.date.toString()
+      assert.equal tokens.calories, shouldTokens.calories
+      assert.equal tokens.foods, shouldTokens.foods
+      assert.equal tokens.important, shouldTokens.important
+
 
     it "hotdog 300c en-AU date", ->
       str = 'hotdog 300c 28/02'
@@ -29,7 +37,11 @@ describe "MealParser", ->
         calories: 300
         foods: 'Hotdog'
         important: false
-      assert.deepEqual tokens, shouldTokens
+      assert.equal tokens.date.toString(), shouldTokens.date.toString()
+      assert.equal tokens.calories, shouldTokens.calories
+      assert.equal tokens.foods, shouldTokens.foods
+      assert.equal tokens.important, shouldTokens.important
+
 
     it "hotdog 300c with US date", ->
       parser = new MealParser('en-US')
@@ -40,7 +52,11 @@ describe "MealParser", ->
         calories: 300
         foods: 'Hotdog'
         important: false
-      assert.deepEqual tokens, shouldTokens
+      assert.equal tokens.date.toString(), shouldTokens.date.toString()
+      assert.equal tokens.calories, shouldTokens.calories
+      assert.equal tokens.foods, shouldTokens.foods
+      assert.equal tokens.important, shouldTokens.important
+
 
     it "yesterday 6.30pm bun mobile! 400c", ->
       parser = new MealParser('en-US')
@@ -51,7 +67,11 @@ describe "MealParser", ->
         calories: 400
         foods: 'Bun Mobile'
         important: true
-      assert.deepEqual tokens, shouldTokens
+      assert.equal tokens.date.toString(), shouldTokens.date.toString()
+      assert.equal tokens.calories, shouldTokens.calories
+      assert.equal tokens.foods, shouldTokens.foods
+      assert.equal tokens.important, shouldTokens.important
+
 
     it "1hr ago bun mobile! 400c", ->
       parser = new MealParser('en-US')
@@ -62,7 +82,11 @@ describe "MealParser", ->
         calories: 400
         foods: 'Bun Mobile'
         important: true
-      assert.deepEqual tokens, shouldTokens
+      assert.equal tokens.date.toString(), shouldTokens.date.toString()
+      assert.equal tokens.calories, shouldTokens.calories
+      assert.equal tokens.foods, shouldTokens.foods
+      assert.equal tokens.important, shouldTokens.important
+
     
     it "1/4 chicken and chips! 400c", ->
       parser = new MealParser('en-US')
