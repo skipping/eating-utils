@@ -6,7 +6,7 @@ describe "MealParser", ->
     it "2 sandwiches 6:03pm 33 calories! feb 28th 150 calories", ->
       tokens = parser.parseMeal '2 sandwiches 6:03pm 33 calories! feb 28th 150 calories'
       shouldTokens =
-        date: new Date ('Fri Feb 28 2014 18:03:00 GMT+1000 (EST)')
+        date: Date.create('Feb 28th 18:03:00')
         calories: 183
         foods: '2 Sandwiches'
         important: true
@@ -19,7 +19,7 @@ describe "MealParser", ->
     it "1/2 a sandwich", ->
       tokens = parser.parseMeal 'apple and 1/2 a sandwich 6:03pm 33 calories! feb 28th 150 calories'
       shouldTokens =
-        date: new Date ('Fri Feb 28 2014 18:03:00 GMT+1000 (EST)')
+        date: Date.create('Feb 28th 18:03:00')
         calories: 183
         foods: 'Apple & 1/2 a Sandwich'
         important: true
@@ -33,7 +33,7 @@ describe "MealParser", ->
       str = 'hotdog 300c 28/02'
       tokens = parser.parseMeal str
       shouldTokens =
-        date: new Date('Fri Feb 28 2014 00:00:00 GMT+1000 (EST)')
+        date: Date.create('Feb 28th')
         calories: 300
         foods: 'Hotdog'
         important: false
@@ -48,7 +48,7 @@ describe "MealParser", ->
       str = 'hotdog 300c 02/28'
       tokens = parser.parseMeal str
       shouldTokens =
-        date: new Date('Fri Feb 28 2014 00:00:00 GMT+1000 (EST)')
+        date: Date.create('Feb 28th')
         calories: 300
         foods: 'Hotdog'
         important: false
