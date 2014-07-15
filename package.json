@@ -1,0 +1,32 @@
+{
+  "name": "eating-utils",
+  "version": "0.1.0",
+  "description": "lexer and other utils for dealing with meals",
+  "directories": {
+    "test": "test"
+  },
+  "main": "lib/main.js",
+  "scripts": {
+    "test": "mocha",
+    "coveralls": "mocha --reporter mocha-lcov-reporter | coveralls src",
+    "coverageHtml": "mocha --reporter html-cov > coverage.html && open coverage.html",
+    "build": "coffee --compile --output lib src",
+    "prepublish": "coffee --compile --output lib src"
+  },
+  "author": "Jake Mc <jake.mc@icloud.com>",
+  "license": "GNU",
+  "devDependencies": {
+    "mocha": "^1.18.2",
+    "chai": "^1.9.1",
+    "coffee-script": "latest",
+    "coffeeify": "latest",
+    "mocha-lcov-reporter": "0.0.1",
+    "coveralls": "^2.11.1",
+    "coffee-coverage": "^0.4.2"
+  },
+  "dependencies": {
+    "sugar": "^1.4.1",
+    "colors": "^0.6.2",
+    "sprintf-js": "0.0.7"
+  }
+}
