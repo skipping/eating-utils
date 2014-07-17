@@ -36,6 +36,9 @@ module.exports = class DateParser
   setDateLocale: (locale) ->
     Date.setLocale(locale)
 
+  setRelativeDate: (date) ->
+    @relativeDate = date
+
   #
   # The text param for these methods is the whole string
   # They should return exactly what they match so it can be discarded from the parent string
