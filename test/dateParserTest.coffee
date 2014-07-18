@@ -102,11 +102,22 @@ describe "DateParser", ->
       str = '1 hour ago'
       res = '1 hour ago'
       assert.equal dp.timeAgo(str), res
+    it "hotdogs 2 hrs ago 3", ->
+      str = '2 hrs ago'
+      res = '2 hrs ago'
+      assert.equal dp.timeAgo(str), res
+    it '1 day ago hotdog', ->
+      str = '1 day ago hotdog'
+      res = '1 day ago'
+      assert.equal dp.timeAgo(str), res
+    it '2 days ago hotdog', ->
+      str = '2 days ago hotdog'
+      res = '2 days ago'
+      assert.equal dp.timeAgo(str), res
     it 'middle of string, minutes', ->
       str = 'bun mobile 10 minutes ago 400c'
       res = '10 minutes ago'
       assert.equal dp.timeAgo(str), res
-
   describe 'parseTime', ->
     it "1 hour ago", ->
       str = '1 hour ago'
