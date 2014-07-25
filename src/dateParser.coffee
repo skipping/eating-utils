@@ -114,7 +114,7 @@ module.exports = class DateParser
       timeStr = @cleanTime timeStr
 
     if not dateStr and @relativeDate
-      dateStr = @relativeDate.toLocaleDateString()
+      dateStr = @relativeDate.short()
     # we can use str = '' but date.create will return Invalid Date
     # null will return todays date which at this stage is what we want
     str = null
