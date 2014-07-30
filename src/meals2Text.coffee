@@ -17,7 +17,6 @@ module.exports = class Meals2Text
     return out.text
 
   createDoc: (meals, title, colours) ->
-    debugger
     mealGroups = meals?.groupBy (meal) -> return meal.date.format('{Weekday} {Month} {dd}, {yyyy}')
     doc = new document
     if title
