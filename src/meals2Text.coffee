@@ -24,11 +24,12 @@ module.exports = class Meals2Text
 
     for day, meals of mealGroups
       doc.addText day
+      doc.addSection()
       calories = 0
       for meal in meals
-        doc.addLine @meal2Text(meal, colours)
+        @meal2Text(doc, meal, colours)
         calories += meal.calories
-
+      doc.addSection()
       @writeTotalCalories doc, calories, colours
       doc.addNewLine()
 
@@ -37,43 +38,56 @@ module.exports = class Meals2Text
   writeHeading: (doc, meals, title) ->
     dateStart = meals.first().date.format('{Weekday} {Month} {dd}, {yyyy}')
     dateFinish = meals[meals.length-1].date.format('{Weekday} {Month} {dd}, {yyyy}')
-    doc.addText title
-    doc.addText " -- "
-    doc.addText dateStart + " - " + dateFinish
-    doc.addSection()
+    title = "| " + title + " -- " + dateStart
+    if dateStart isnt dateFinish
+      title += " - " + dateFinish
+
+    # +2 to compensate for end of title
+    if title.length+2 > doc.lineLength
+      title += ' |'
+      doc.lineLength = title.length
+    else
+      title += sprintf('%' + (doc.lineLength - title.length) + 's', ' |')
+    
+    doc.addTitleSection()
+    doc.addLine title
+    doc.addTitleSection()
     doc.addNewLine()
     doc.addNewLine()
 
-  writeTotalCalories: (doc,calories, colours) ->
-    sep =  sprintf '%61s', "---------"
-    cals =  sprintf '%56s cals', calories
+  writeTotalCalories: (doc, calories, colours) ->
+    maxCalorieLength = 7
+    cals =  sprintf '%' + (doc.lineLength - maxCalorieLength) + 's cals', calories
     if colours
-      sep = sep.grey
       cals = cals.green
-    doc.addLine sep
     doc.addLine cals
 
-  meal2Text: (meal, colours) ->
+  meal2Text: (doc, meal, colours) ->
     if meal._id
       mealStr = sprintf('%2s| ', meal._id)
       if colours
         mealStr = mealStr.grey
     else 
       mealStr = sprintf('   ') + " "
-    
+    spacer = ' | '
     time = meal.date.format('{hh}:{mm}{tt}')
-    foodcals = sprintf('%6s | %-35s | %4s cals', time, meal.foods, meal.calories)
+    # 6 spaces for id if exists
+    # 9 for '1000 cals'
+    foodPad = (doc.lineLength - time.length - spacer.length * 2 - 6 - 9)
+
+    foodcals = sprintf('%6s' + spacer + '%-' + foodPad + 's' + spacer + '%4s cals', time, meal.foods, meal.calories)
     if meal.important
       foodcals += " *"
       if colours
         foodcals = foodcals.yellow
     
     mealStr += foodcals
-    return mealStr
+    doc.addLine mealStr
 
 
 class document
-  constructor: ->
+  constructor: (lineLength) ->
+    @lineLength = lineLength or 64
     @text = ''
 
   addText: (text) ->
@@ -88,30 +102,33 @@ class document
     @text = @text.concat('\n', text)
     return @
 
+  addTitleSection: (text) ->
+    @addLine Array(@lineLength+1).join('=')
+
   addSection: ->
-    @addLine('------------------------------------')
+    @addLine Array(@lineLength+1).join('-')
     return @
 
 
-# debugger
+# # debugger
 # blah = new Meals2Text()
 # meals = [
 #   {
 #     _id: 9
-#     date: Date.create('Yesterday 6:30pm')
-#     calories: 400
+#     date: Date.create('yesterday 6:30pm')
+#     calories: 700
 #     foods: 'Bun Mobile'
 #     important: true
 #   },
 #   {
 #     date: Date.create('Today 10am')
-#     calories: 600
+#     calories: 900
 #     foods: 'Bun Mobile'
 #     important: false
 #   },
 #   {
 #     date: Date.create('Today 10.30am')
-#     calories: 300
+#     calories: 400
 #     foods: 'beans'
 #     important: false
 #   }
