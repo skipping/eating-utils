@@ -113,7 +113,9 @@ module.exports = class DateParser
     if timeStr
       timeStr = @cleanTime timeStr
 
-    if not dateStr and @relativeDate
+    if not timeStr and not dateStr and @relativeDate
+      dateStr = @relativeDate.long()
+    else if not dateStr and @relativeDate
       dateStr = @relativeDate.short()
     # we can use str = '' but date.create will return Invalid Date
     # null will return todays date which at this stage is what we want
