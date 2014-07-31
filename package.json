@@ -1,6 +1,6 @@
 {
   "name": "eating-utils",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "lexer and other utils for dealing with meals",
   "directories": {
     "test": "test"
