@@ -23,7 +23,7 @@ module.exports = class Meals2Text
       @writeHeading doc, meals, title
 
     for day, meals of mealGroups
-      doc.addText day
+      doc.addLine day
       doc.addSection()
       calories = 0
       for meal in meals
@@ -99,11 +99,12 @@ class document
     return @
 
   addLine: (text) ->
-    @text = @text.concat('\n', text)
+    @text = @text.concat(text, '\n')
     return @
 
   addTitleSection: (text) ->
     @addLine Array(@lineLength+1).join('=')
+    return @
 
   addSection: ->
     @addLine Array(@lineLength+1).join('-')
