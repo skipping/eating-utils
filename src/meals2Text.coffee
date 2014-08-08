@@ -85,6 +85,25 @@ module.exports = class Meals2Text
     doc.addLine mealStr
 
 
+  meal2Console: (meal, colours) ->
+    if meal._id
+      mealStr = sprintf('%2s| ', meal._id)
+      if colours
+        mealStr = mealStr.grey
+    else 
+      mealStr = sprintf('   ') + " "
+    
+    time = meal.date.format('{hh}:{mm}{tt}')
+    foodcals = sprintf('%6s | %-35s | %4s cals', time, meal.foods, meal.calories)
+    if meal.important
+      foodcals += " *"
+      if colours
+        foodcals = foodcals.yellow
+    
+    mealStr += foodcals
+    return mealStr
+
+
 class document
   constructor: (lineLength) ->
     @lineLength = lineLength or 64
